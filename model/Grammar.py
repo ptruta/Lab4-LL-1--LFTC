@@ -1,10 +1,10 @@
 class Grammar:
 
-    def __init__(self, N, E, P, S):
-        self.N = N
-        self.E = E
-        self.P = P
-        self.S = S
+    def __init__(self):
+        self.N = []
+        self.E = []
+        self.P = []
+        self.S = ""
         self.read_from_file()
 
     def is_non_terminal(self, value):
@@ -26,11 +26,11 @@ class Grammar:
                         tokens = line.split(" ")
                         for j in range(0, len(tokens), 1):
                             if i == 0:
-                                self.N = self.N + tokens[j]
+                                self.N.append(tokens[j])
                             if i == 1:
-                                self.E = self.E + tokens[j]
+                                self.E.append(tokens[j])
                             if i == 2:
-                                self.S = self.S + tokens[j]
+                                self.S = tokens[j]
                     if i > 2:
                         tokens = line.split(" -> ")
                         rules = []
@@ -39,7 +39,7 @@ class Grammar:
 
                         for rule in tokens[1].split(" | "):
                             rules.append([rule.split(" ")])
-                        self.P = self.P + str((tokens[0], rules))
+                        self.P.append((tokens[0], rules))
 
                     i = i + 1
         except IOError as e:
@@ -77,5 +77,5 @@ class Grammar:
                + 'P = { ' + ', '.join([' -> '.join(prod) for prod in self.P]) + ' }\n' \
                + 'S = ' + str(self.S) + '\n'
 print("1.Grammar from the requested file -------------------------------")
-grammar = Grammar("", "", "", "")
+grammar = Grammar()
 
