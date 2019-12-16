@@ -2,7 +2,7 @@ class Grammar:
 
     def __init__(self):
         self.N = []
-        self.E = []
+        self.E = set()
         self.P = []
         self.S = ""
         self.read_from_file()
@@ -28,7 +28,7 @@ class Grammar:
                             if i == 0:
                                 self.N.append(tokens[j])
                             if i == 1:
-                                self.E.append(tokens[j])
+                                self.E.add(tokens[j])
                             if i == 2:
                                 self.S = tokens[j]
                     if i > 2:
