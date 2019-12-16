@@ -19,4 +19,3 @@ class Production:
             stri += "| "
         stri1 = stri[:-2]
         return stri1
-print(Production("A",["ab","aB","A"]).toString())
