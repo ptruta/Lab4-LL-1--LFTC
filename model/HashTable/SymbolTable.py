@@ -14,5 +14,8 @@ class SymbolTable:
     def get(self, value):
         return self.__hashTable.getID(value)
 
+    def getValue(self, id):
+        return self.__hashTable.get(id)
+
     def getHashTable(self):
         return self.__hashTable.getHashTable()

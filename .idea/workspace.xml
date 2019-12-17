@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="07763c9c-fcfe-48f6-924b-577d9eab86cf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/model/Parser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/LL1-LFTC-lab4.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/LL1-LFTC-lab4.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/OldScanner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/HashTable/HashTable.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/HashTable/HashTable.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/HashTable/SymbolTable.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/HashTable/SymbolTable.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Scanner.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/Scanner.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,10 +28,11 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="ProjectId" id="1V7CKZYK1xFq8rczFefu1oXb7jr" />
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/model/Grammar.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Lab1" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -96,6 +99,7 @@
       <updated>1576527384063</updated>
       <workItem from="1576527385657" duration="260000" />
       <workItem from="1576528015806" duration="1900000" />
+      <workItem from="1576594686337" duration="5983000" />
     </task>
     <servers />
   </component>

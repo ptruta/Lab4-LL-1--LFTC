@@ -26,7 +26,7 @@ class HashTable:
             self.__content.append((key, [value]))
             col_index = 0
             index = len(self.__content) - 1
-            return (index, col_index)
+            return index, col_index
 
     def hashCode(self, value):
         sumOfCharsInt = 0
@@ -36,6 +36,9 @@ class HashTable:
             sumOfCharsInt += ord(elementChar)
 
         return math.ceil(sumOfCharsInt / len(value))
+
+    def get(self, id):
+        return self.__content[id]
 
     def getID(self, value):
         key = self.hashCode(value)
@@ -55,5 +58,3 @@ class HashTable:
 
     def getHashTable(self):
         return self.__content
-
-
