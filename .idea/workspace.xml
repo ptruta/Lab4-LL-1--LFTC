@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="07763c9c-fcfe-48f6-924b-577d9eab86cf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/model/OldScanner.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/HashTable/HashTable.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/HashTable/HashTable.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/HashTable/SymbolTable.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/HashTable/SymbolTable.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/Scanner.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/Scanner.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,7 +30,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Lab1" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Lab1/Model/Specification.py" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -58,7 +56,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.Scanner">
     <configuration name="ParseTable" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="LL1-LFTC-lab4" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -81,8 +79,31 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Scanner" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="LL1-LFTC-lab4" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/model" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/model/Scanner.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.Scanner" />
         <item itemvalue="Python.ParseTable" />
       </list>
     </recent_temporary>
@@ -99,7 +120,8 @@
       <updated>1576527384063</updated>
       <workItem from="1576527385657" duration="260000" />
       <workItem from="1576528015806" duration="1900000" />
-      <workItem from="1576594686337" duration="5983000" />
+      <workItem from="1576594686337" duration="6678000" />
+      <workItem from="1576602990697" duration="2401000" />
     </task>
     <servers />
   </component>
@@ -133,7 +155,19 @@
       </map>
     </option>
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Lab4_LL_1__LFTC$ParseTable.coverage" NAME="ParseTable Coverage Results" MODIFIED="1576529383799" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
+    <SUITE FILE_PATH="coverage/Lab4_LL_1__LFTC$Scanner.coverage" NAME="Scanner Coverage Results" MODIFIED="1576605356342" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
   </component>
 </project>

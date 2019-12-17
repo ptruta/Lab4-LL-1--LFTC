@@ -113,27 +113,35 @@ class Scanner:
     def getIdentifierTable(self):
         return self.__identifierTable
 
-    def displayPifReadable(self, pif):
+    def displayPifReadable(self):
         pifReadable = []
-        for pair in pif:
+        for pair in self.__pif:
             codificationTableCode = int(pair[0])
             symbolTablePosition = int(pair[1])
-            codificationTableToken = codification[codificationTableCode]
+            codificationTableToken = Scanner.findKeyInCodificationTable(codificationTableCode)
             if symbolTablePosition == -1:
-                pifReadable.append((codificationTableToken + " " + codificationTableCode, "from Codification"))
+                pifReadable.append((codificationTableToken + " " + str(codificationTableCode), "from Codification"))
 
             elif symbolTablePosition == 0:
-                symbolTableEntry = self.__identifierTable.get(symbolTablePosition)
-                pifReadable.append((codificationTableToken + " " + codificationTableCode, " " + symbolTableEntry))
+                symbolTableEntry = self.__identifierTable.getValue(symbolTablePosition)
+                pifReadable.append(
+                    (codificationTableToken + " " + str(codificationTableCode), " " + str(symbolTableEntry)))
             elif symbolTablePosition == 1:
                 symbolTableEntry = self.__constantTable.get(symbolTablePosition)
-                pifReadable.append((codificationTableToken + " " + codificationTableCode, " " + symbolTableEntry))
+                pifReadable.append(
+                    (codificationTableToken + " " + str(codificationTableCode), " " + str(symbolTableEntry)))
 
         print("Program Internal Form readable: " + str(pifReadable))
 
     @staticmethod
     def removeExtraSpaces(line):
         return line.strip().replace(" {2,}", " ")
+
+    @staticmethod
+    def findKeyInCodificationTable(value):
+        for pair in codification.items():
+            if pair[1] == value:
+                return pair[0]
 
     def run(self):
 
@@ -158,3 +166,11 @@ class Scanner:
 
         except IOError as e:
             print(e)
+
+
+print(codification)
+scanner = Scanner("file.txt")
+scanner.run()
+print("pif:")
+print(scanner.getPif())
+scanner.displayPifReadable()

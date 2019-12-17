@@ -29,13 +29,7 @@ class HashTable:
             return index, col_index
 
     def hashCode(self, value):
-        sumOfCharsInt = 0
-
-        for elementChar in value:
-            # ascii code for characters, is the integer representation of A from ascii code
-            sumOfCharsInt += ord(elementChar)
-
-        return math.ceil(sumOfCharsInt / len(value))
+        return hash(value)
 
     def get(self, id):
         return self.__content[id]
