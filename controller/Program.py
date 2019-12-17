@@ -4,7 +4,7 @@ from model.Scanner import Scanner
 
 class Program:
     parser = Parser()
-    scanner = Scanner("./data/grammar")
+    scanner = Scanner("./model/file.txt")
 
     def getFirstSet(self):
         return self.parser.getFirstSet()

@@ -20,7 +20,7 @@ class Grammar:
     def read_from_file(self):
         try:
             i = 0
-            with open('../data/grammar') as f:
+            with open('./data/grammar') as f:
                 for line in f.readlines():
                     if i <= 2:
                         tokens = line.split(" ")
@@ -76,6 +76,4 @@ class Grammar:
                + 'E = { ' + ', '.join(self.E) + ' }\n' \
                + 'P = { ' + ', '.join([' -> '.join(prod) for prod in self.P]) + ' }\n' \
                + 'S = ' + str(self.S) + '\n'
-print("1.Grammar from the requested file -------------------------------")
-grammar = Grammar()
 

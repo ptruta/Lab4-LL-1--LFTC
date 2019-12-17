@@ -166,11 +166,3 @@ class Scanner:
 
         except IOError as e:
             print(e)
-
-
-print(codification)
-scanner = Scanner("file.txt")
-scanner.run()
-print("pif:")
-print(scanner.getPif())
-scanner.displayPifReadable()
