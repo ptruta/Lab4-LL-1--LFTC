@@ -1,3 +1,5 @@
+from controller.Program import Program
+
 
 class UI:
     def __init__(self, program):
@@ -134,5 +136,3 @@ class UI:
     def promptForNonTerminal():
         input1 = input("Give the nonTerminal:")
         return input1.strip()
-
-

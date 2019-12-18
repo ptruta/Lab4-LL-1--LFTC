@@ -3,8 +3,9 @@ from model.Scanner import Scanner
 
 
 class Program:
-    parser = Parser()
-    scanner = Scanner("./model/file.txt")
+    def __init__(self):
+        self.parser = Parser()
+        self.scanner = Scanner("./model/file.txt")
 
     def getFirstSet(self):
         return self.parser.getFirstSet()

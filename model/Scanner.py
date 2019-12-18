@@ -163,7 +163,7 @@ class Scanner:
                             errors.append("Unknown token: " + token + " at line :" + str(lineNr))
 
                 lineNr += 1
-            return errors
 
         except IOError as e:
             print(e)
+        return errors

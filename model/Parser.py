@@ -16,6 +16,13 @@ class Parser:
         self.__alpha = stack()
         self.__beta = stack()
         self.__pi = stack()
+        self.generateFirstSet()
+        self.generateFollowSets()
+        self.createParseTable()
+
+    def generateFollowSets(self):
+        for nonTerminal in self.__grammar.get_non_terminals():
+            self.__followSet[nonTerminal] = self.followOf(nonTerminal, nonTerminal)
 
     def generateFirstSet(self):
         for nonTerminal in self.__grammar.get_non_terminals():
@@ -23,9 +30,9 @@ class Parser:
 
     def firstOf(self, nonTerminal):
         if nonTerminal in self.__firstSet.keys():
-            return self.__firstSet.get(nonTerminal)
-        temp = set()
+            return self.__firstSet[nonTerminal]
         terminals = self.__grammar.get_terminals()
+        temp = set()
         for production in self.__grammar.get_productions_for_non_terminal(nonTerminal):
             for rule in production.getRules():
                 firstSymbol = rule[0]
@@ -34,7 +41,10 @@ class Parser:
                 elif firstSymbol in terminals:
                     temp.add(firstSymbol)
                 else:
-                    temp += self.firstOf(firstSymbol)
+                    if firstSymbol == nonTerminal:
+                        return temp
+                    else:
+                        temp.union(self.firstOf(firstSymbol))
         return temp
 
     def followOf(self, nonTerminal, initialNonTerminal):
@@ -53,13 +63,14 @@ class Parser:
                 if nonTerminal in rule and ruleConflict not in self.rules:
                     self.rules.append(ruleConflict)
                     indexNonTerminal = rule.index(nonTerminal)
-                    temp += self.followOperation(nonTerminal, temp, terminals, productionLeft, rule, indexNonTerminal,
-                                                 initialNonTerminal)
+                    temp.union(
+                        self.followOperation(nonTerminal, temp, terminals, productionLeft, rule, indexNonTerminal,
+                                             initialNonTerminal))
                     sublist = rule[indexNonTerminal + 1: -1]
                     if nonTerminal in sublist:
-                        temp += self.followOperation(nonTerminal, temp, terminals, productionLeft, rule,
-                                                     indexNonTerminal + 1 + sublist.index(nonTerminal),
-                                                     initialNonTerminal)
+                        temp.union(self.followOperation(nonTerminal, temp, terminals, productionLeft, rule,
+                                                        indexNonTerminal + 1 + sublist.index(nonTerminal),
+                                                        initialNonTerminal))
                     self.rules.pop()
         return temp
 
@@ -68,18 +79,18 @@ class Parser:
             if prodLeft == nonTerminal:
                 return temp
             if initialNonTerminal != prodLeft:
-                temp += self.followOf(prodLeft, initialNonTerminal)
+                temp.union(self.followOf(prodLeft, initialNonTerminal))
         else:
-            nextSymbol = rule[initialNonTerminal + 1]
+            nextSymbol = rule[indexNonTerminal + 1]
             if nextSymbol in terminals:
                 temp.add(nextSymbol)
             else:
                 if initialNonTerminal != nextSymbol:
-                    fists = set(self.__firstSet[nextSymbol])
-                    if "ε" in fists:
+                    firsts = set(self.__firstSet[nextSymbol])
+                    if "ε" in firsts:
                         temp += self.followOf(nextSymbol, initialNonTerminal)
-                        fists.remove("ε")
-                    temp += fists
+                        firsts.remove("ε")
+                    temp.union(firsts)
         return temp
 
     def createParseTable(self):

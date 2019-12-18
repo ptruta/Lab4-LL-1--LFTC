@@ -22,14 +22,14 @@ class ParseTable:
         return result
 
     def __str__(self):
-
-        str = ""
-        for entry in self.__table.values():
-            if entry[1] is not None:
-                key = entry[0]
-                value = entry[1]
-                str += "M[" + key[0] + ", " + key[1] + "] = [" + value[0] + ", " + value[1] + "]\n"
-
-        return str
+        return str(self.__table)
+        # str = ""
+        # for entry in self.__table.values():
+        #     if entry[1] is not None:
+        #         key = entry[0]
+        #         value = entry[1]
+        #         str += "M[" + key[0] + ", " + key[1] + "] = [" + value[0] + ", " + value[1] + "]\n"
+        #
+        # return str
 
 

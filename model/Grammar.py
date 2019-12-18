@@ -1,8 +1,11 @@
+from model.Production import Production
+
+
 class Grammar:
 
     def __init__(self):
         self.N = []
-        self.E = set()
+        self.E = list()
         self.P = []
         self.S = ""
         self.read_from_file()
@@ -23,33 +26,39 @@ class Grammar:
             with open('./data/grammar') as f:
                 for line in f.readlines():
                     if i <= 2:
+                        line = line.replace("\n", "")
                         tokens = line.split(" ")
                         for j in range(0, len(tokens), 1):
                             if i == 0:
                                 self.N.append(tokens[j])
                             if i == 1:
-                                self.E.add(tokens[j])
+                                self.E.append(tokens[j])
                             if i == 2:
                                 self.S = tokens[j]
                     if i > 2:
+                        line = line.strip("\n")
                         tokens = line.split(" -> ")
                         rules = []
 
                         print(tokens)
 
                         for rule in tokens[1].split(" | "):
-                            rules.append([rule.split(" ")])
-                        self.P.append((tokens[0], rules))
+                            rules.append(rule.split(" "))
+
+                        self.P.append(Production(tokens[0], rules))
 
                     i = i + 1
+
         except IOError as e:
             print(e)
+        print("am ajuns")
 
     def get_productions_for_non_terminal(self, non_terminal):
         if not self.is_non_terminal(non_terminal):
             raise Exception('Can only show productions for non-terminals')
 
-        return [prod for prod in self.P if prod[0] == non_terminal]
+        list = [prod for prod in self.P if prod.getStart() == non_terminal]
+        return list
 
     def get_productions_containing_non_terminal(self, non_terminal):
         if not self.is_non_terminal(non_terminal):
@@ -57,7 +66,7 @@ class Grammar:
 
         return [prod for prod in self.P
                 for rule in prod.getRules()
-                if rule[non_terminal] != -1]
+                if non_terminal in rule]
 
     def get_productions(self):
         return self.P
@@ -76,4 +85,3 @@ class Grammar:
                + 'E = { ' + ', '.join(self.E) + ' }\n' \
                + 'P = { ' + ', '.join([' -> '.join(prod) for prod in self.P]) + ' }\n' \
                + 'S = ' + str(self.S) + '\n'
-
