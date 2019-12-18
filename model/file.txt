@@ -1,4 +1,4 @@
 PROGRAM
-BEGIN
-int a
-END
+begin
+    int a
+end
