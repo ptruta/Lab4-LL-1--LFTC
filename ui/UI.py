@@ -84,17 +84,19 @@ class UI:
             self.start()
             return
         elif option == 1:
-            for (key,value) in self.program.getFirstSet():
-                print(self.displaySet(key,value))
+            for key in self.program.getFirstSet().keys():
+                for value in self.program.getFirstSet().values():
+                    print(self.displaySet(key,value))
             self.fileMenuParser()
             return
         elif option == 2:
-            for (key,value) in self.program.getFollowSet():
-                print(self.displaySet(key,value))
+            for key in self.program.getFollowSet().keys():
+                for value in self.program.getFollowSet().values():
+                    print(self.displaySet(key,value))
             self.fileMenuParser()
             return
         elif option == 3:
-            print(self.program.getParserTable())
+            print(str(self.program.getParserTable()))
             print("\n")
             self.fileMenuParser()
             return

@@ -7,29 +7,27 @@ class ParseTable:
 
     def get(self, key):
         for entry in self.__table.values():
-            if entry[1] is not None:
-                currentKey = entry[0]
-                currentValue = entry[1]
-                if currentKey[0] == key[0] and currentKey[1] == key[1]:
+            if entry.getValue() is not None:
+                currentKey = entry.getKey1()
+                currentValue = entry.getValue()
+                if currentKey[0] == key.getKey1() and currentKey[1] == key.getValue():
                     return currentValue
         return None
 
     def containsKey(self, key):
         result = False
         for currentKey in self.__table.keys():
-            if currentKey[0] == key[0] and currentKey[1] == key[1]:
+            if currentKey.getKey1() == key.getkey1() and currentKey.getValue() == key.getValue():
                 result = True
         return result
 
     def __str__(self):
-        return str(self.__table)
-        # str = ""
-        # for entry in self.__table.values():
-        #     if entry[1] is not None:
-        #         key = entry[0]
-        #         value = entry[1]
-        #         str += "M[" + key[0] + ", " + key[1] + "] = [" + value[0] + ", " + value[1] + "]\n"
-        #
-        # return str
+        str1 = ""
+        for key in self.__table.keys():
+            for value in self.__table.values():
+                if value is not None:
+                    str1 += "M[" + key.getKey1() + ", " + key.getValue() + "] = [" + str(value) + "]\n"
+
+        return str1
 
 

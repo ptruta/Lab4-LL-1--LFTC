@@ -1,8 +1,8 @@
 from inspect import stack
 
 from model.Grammar import Grammar
+from model.Pair import Pair
 from model.ParseTable import ParseTable
-
 
 class Parser:
     rules = stack()
@@ -88,7 +88,7 @@ class Parser:
                 if initialNonTerminal != nextSymbol:
                     firsts = set(self.__firstSet[nextSymbol])
                     if "ε" in firsts:
-                        temp += self.followOf(nextSymbol, initialNonTerminal)
+                        temp.union(self.followOf(nextSymbol, initialNonTerminal))
                         firsts.remove("ε")
                     temp.union(firsts)
         return temp
@@ -100,9 +100,9 @@ class Parser:
 
         # M(a, a) = pop
         # M($, $) = acc
-        self.__parseTable.put(("$", "$"), (list("acc"), -1))
+        self.__parseTable.put(Pair("$", "$"), Pair(list("acc"), -1))
         for terminal in self.__grammar.get_terminals():
-            self.__parseTable.put((terminal, terminal), (list("pop"), -1))
+            self.__parseTable.put(Pair(terminal, terminal), Pair(list("pop"), -1))
 
         #  1) M(A, a) = (α, i),
         # if:
@@ -120,39 +120,39 @@ class Parser:
         # c) A -> α
         # production
         # with index
+        for key in self.__productionsNumbered.keys():
+            for value in self.__productionsNumbered.values():
+                rowSymbol = key.getKey1()
+                rule = key.getValue()
+                parseTableValue = Pair(rule, value)
 
-        for production in self.__productionsNumbered:
-            rowSymbol = production[0][0]
-            rule = production[0][1]
-            parseTableValue = (rule, production[1])
+                for columnSymbol in columnSymbols:
+                    parseTableKey = Pair(rowSymbol, columnSymbol)
 
-            for columnSymbol in columnSymbols:
-                parseTableKey = (rowSymbol, columnSymbol)
-
-                if rule[0] == columnSymbol and columnSymbol != "ε":
-                    self.__parseTable.put(parseTableKey, parseTableValue)
-
-                elif rule[0] in self.__grammar.get_non_terminals() and columnSymbol in self.__firstSet[rule[0]]:
-                    if not self.__parseTable.containsKey(parseTableKey):
+                    if rule[0] == columnSymbol and columnSymbol != "ε":
                         self.__parseTable.put(parseTableKey, parseTableValue)
 
-                else:
-                    if rule[0] == "ε":
-                        for b in self.__followSet.get(rowSymbol):
-                            self.__parseTable.put((rowSymbol, b), parseTableValue)
+                    elif rule[0] in self.__grammar.get_non_terminals() and columnSymbol in self.__firstSet.get(rule[0]):
+                        if not self.__parseTable.containsKey(parseTableKey):
+                            self.__parseTable.put(parseTableKey, parseTableValue)
 
                     else:
-                        firsts = set()
-                        for symbol in rule:
-                            if symbol in self.__grammar.get_terminals():
-                                firsts += self.__firstSet.get(symbol)
-                        if "ε" in firsts:
-                            for b in self.__firstSet.get(rowSymbol):
-                                if b == "ε":
-                                    b = "$"
-                                parseTableKey = (rowSymbol, b)
-                                if not self.__parseTable.containsKey(parseTableKey):
-                                    self.__parseTable.put(parseTableKey, parseTableValue)
+                        if rule[0] == "ε":
+                            for b in self.__followSet.get(rowSymbol):
+                                self.__parseTable.put(Pair(rowSymbol, b), parseTableValue)
+
+                        else:
+                            firsts = set()
+                            for symbol in rule:
+                                if symbol in self.__grammar.get_non_terminals():
+                                    firsts.union(self.__firstSet.get(symbol))
+                            if "ε" in firsts:
+                                for b in self.__firstSet.get(rowSymbol):
+                                    if b == "ε":
+                                        b = "$"
+                                    parseTableKey = Pair(rowSymbol, b)
+                                    if not self.__parseTable.containsKey(parseTableKey):
+                                        self.__parseTable.put(parseTableKey, parseTableValue)
 
     def parse(self, w):
         self.initializeStacks(w)
@@ -161,17 +161,17 @@ class Parser:
         result = True
 
         while go:
-            betaHead = self.__beta[-1]
-            alphaHead = self.__alpha[-1]
+            betaHead = self.__beta.pop()
+            alphaHead = self.__alpha.pop()
 
             if betaHead == "$" and alphaHead == "$":
                 return result
 
-            heads = (betaHead, alphaHead)
+            heads = Pair(betaHead, alphaHead)
             parseTableInput = self.__parseTable.get(heads)
 
             if parseTableInput is None:
-                heads = (betaHead, "ε")
+                heads = Pair(betaHead, "ε")
                 parseTableInput = self.__parseTable.get(heads)
                 if parseTableInput is not None:
                     self.__beta.pop()
@@ -200,7 +200,7 @@ class Parser:
         index = 1
         for production in self.__grammar.get_productions():
             for rule in production.getRules():
-                self.__productionsNumbered[(production.getStart(), rule)] = index
+                self.__productionsNumbered[Pair(production.getStart(), rule)] = index
                 index += 1
 
     def initializeStacks(self, w):

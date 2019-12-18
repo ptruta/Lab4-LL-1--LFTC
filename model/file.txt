@@ -1,1 +1,5 @@
-for(a=1;(a<10);a=1) fi
+PROGRAM
+BEGIN
+    for ( a = 1 ; ( a < 10 ) ; a = 1 )
+        a = a + 1
+END

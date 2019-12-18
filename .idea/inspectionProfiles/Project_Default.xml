@@ -41,6 +41,7 @@
       <option name="ignoredIdentifiers">
         <list>
           <option value="str.getKey" />
+          <option value="model.DictAdd.*" />
         </list>
       </option>
     </inspection_tool>
