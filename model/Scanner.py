@@ -36,12 +36,12 @@ class Scanner:
         return token, index
 
     @staticmethod
-    def isConstant(token):
-        return re.match('^(0|[+-]?[1-9][0-9]*)$|^\'[a-zA-Z0-9]\'$|^\"[a-zA-Z0-9]\"$', token) is not None
-
-    @staticmethod
     def isIdentifier(token):
-        return re.match(r'^[a-zA-Z]([a-zA-Z]|[0-9]|_){,249}$', token) is not None
+        return re.match(r'^[a-zA-Z]([a-zA-Z]|[0-9]){0,8}$', token) is not None or \
+               re.match(r'^[a-zA-Z][a-zA-Z]{0,8}[0-9]{0,8}$', token) is not None
+    @staticmethod
+    def isConstant(token):
+        return re.match('^(0|[+\- ]*[1-9][0-9]*)$|^\'[a-zA-Z0-9]\'$|^\".+\"$', token) is not None
 
     @staticmethod
     def isPartOfOperator(char):
@@ -163,6 +163,7 @@ class Scanner:
                             errors.append("Unknown token: " + token + " at line :" + str(lineNr))
 
                 lineNr += 1
+            return errors
 
         except IOError as e:
             print(e)

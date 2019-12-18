@@ -1,19 +1,15 @@
-from controller.Program import Program
-
 
 class UI:
-    program = Program()
-
     def __init__(self, program):
         self.program = program
 
     def start(self):
-        print()
+        print("\n")
         print("\t 0 - Exit \n")
         print("\t 1 - Grammar \n")
         print("\t 2 - Parser \n")
 
-        option = input(int("Your choice is:"))
+        option = int(input("Your choice is:"))
 
         if option == 0:
             exit(0)
@@ -23,8 +19,7 @@ class UI:
         elif option == 2:
             self.fileMenuParser()
             return
-        else:
-            self.start()
+        self.start()
 
     def fileMenuGrammar(self):
         print()
@@ -35,7 +30,7 @@ class UI:
         print("\t4 - Productions of a non-terminal \n")
         print("\t5 - Starting Symbol \n")
 
-        option = input(int("Your choice is:"))
+        option = int(input("Your choice is:"))
 
         if option == 0:
             self.start()
@@ -53,7 +48,7 @@ class UI:
         elif option == 3:
             print("P :{ \n")
             for production in self.program.getProductions():
-                print("     "+ production)
+                print("     "+ str(production))
             print("} + \n")
             print("\n")
             self.fileMenuGrammar()
@@ -68,8 +63,7 @@ class UI:
             print("\n")
             self.fileMenuGrammar()
             return
-        else:
-            self.start()
+        self.start()
 
 
     def fileMenuParser(self):
@@ -82,7 +76,7 @@ class UI:
         print("\t5 - Parse source code \n")
         print("\t6 - Parse pif \n")
 
-        option = input(int("Your choice is:"))
+        option = int(input("Your choice is:"))
 
         if option == 0:
             self.start()

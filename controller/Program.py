@@ -59,13 +59,13 @@ class Program:
     def scanSourceCode(self):
         errors = self.scanner.run()
 
-        if errors.size == 0:
+        if len(errors) == 0:
             pif = self.scanner.getPif()
-            print(pif + "\n")
+            print(str(pif) + "\n")
 
             w = []
-            for elem in pif:
-                w.append(str(elem.getKey()))
+            for (key,value) in pif:
+                w.append(key)
 
             print(w)
             self.parse(w)
@@ -83,4 +83,4 @@ class Program:
         pif = self.scanSourceCode()
 
         if pif is not None:
-            print(self.parser.parseSource())
+            print(self.parser.parseSource(pif))
