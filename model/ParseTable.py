@@ -17,7 +17,7 @@ class ParseTable:
     def containsKey(self, key):
         result = False
         for currentKey in self.__table.keys():
-            if currentKey.getKey1() == key.getkey1() and currentKey.getValue() == key.getValue():
+            if currentKey.getKey1() == key.getKey1() and currentKey.getValue() == key.getValue():
                 result = True
         return result
 
@@ -27,6 +27,7 @@ class ParseTable:
             for value in self.__table.values():
                 if value is not None:
                     str1 += "M[" + key.getKey1() + ", " + key.getValue() + "] = [" + str(value) + "]\n"
+                    #print("M[" + key.getKey1() + ", " + key.getValue() + "] = [" + str(value) + "]\n")
 
         return str1
 

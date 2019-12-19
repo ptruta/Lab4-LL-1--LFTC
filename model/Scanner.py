@@ -98,10 +98,19 @@ class Scanner:
                 yield token
                 token = ''
 
+            elif line[index] in reservedWords:
+                if token:
+                    yield token
+                token, index = line[index], index + 1
+
+                yield token
+                token = ''
+
             else:
                 token += line[index]
                 index += 1
-        if token:
+
+        if token and len(token) <= 8:
             yield token
 
     def getPif(self):

@@ -95,7 +95,7 @@ class Parser:
 
     def createParseTable(self):
         self.numberingProductions()
-        columnSymbols = list(self.__grammar.get_non_terminals())
+        columnSymbols = list(self.__grammar.get_terminals())
         columnSymbols.append("$")
 
         # M(a, a) = pop
@@ -145,7 +145,7 @@ class Parser:
                             firsts = set()
                             for symbol in rule:
                                 if symbol in self.__grammar.get_non_terminals():
-                                    firsts.union(self.__firstSet.get(symbol))
+                                    firsts.update(self.__firstSet.get(symbol))
                             if "ε" in firsts:
                                 for b in self.__firstSet.get(rowSymbol):
                                     if b == "ε":
@@ -161,8 +161,8 @@ class Parser:
         result = True
 
         while go:
-            betaHead = self.__beta.pop()
-            alphaHead = self.__alpha.pop()
+            betaHead = self.__beta[len(self.__beta)]
+            alphaHead = self.__alpha[len(self.__alpha)]
 
             if betaHead == "$" and alphaHead == "$":
                 return result
@@ -181,8 +181,8 @@ class Parser:
                     go = False
                     result = False
                 else:
-                    production = parseTableInput[0]
-                    productionPos = parseTableInput[1]
+                    production = parseTableInput.getKey1()
+                    productionPos = parseTableInput.getValue()
 
                     if productionPos == -1 and production[0] == "acc":
                         go = False
@@ -200,8 +200,9 @@ class Parser:
         index = 1
         for production in self.__grammar.get_productions():
             for rule in production.getRules():
-                self.__productionsNumbered[Pair(production.getStart(), rule)] = index
                 index += 1
+                self.__productionsNumbered[Pair(production.getStart(), rule)] = index
+
 
     def initializeStacks(self, w):
         self.__alpha.clear()
@@ -216,9 +217,9 @@ class Parser:
         self.__pi.append("ε")
 
     @staticmethod
-    def appendAsChars(sequence, stack):
+    def appendAsChars(sequence, stack1):
         for i in range(len(sequence) - 1, 0, -1):
-            stack.append(sequence[i])
+            stack1.append(sequence[i])
 
     def parseSource(self, pif):
         sequence = []

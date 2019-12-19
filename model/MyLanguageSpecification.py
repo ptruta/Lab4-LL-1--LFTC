@@ -1,4 +1,6 @@
-separators = ['[', ']', '{', '}', '(', ')', ':', ';', ' ', ',', '.']
+from typing import List, Any, Union
+
+separators: List[Union[str, Any]] = ['[', ']', '{', '}', '(', ')', ':', ';', ' ', ',', '.']
 operators = ['+', '-', '*', '/', '<', '>', '<=', '=', '>=', '==', '&&', '||', '%', '!', '!=', '^', '\n']
 reservedWords = ['int', 'char', 'bool', 'array', 'float', 'struct', 'if', 'else', 'for', 'while', 'begin', 'end',
                  'read', 'write', 'string']

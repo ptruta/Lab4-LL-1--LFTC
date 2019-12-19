@@ -1,4 +1,4 @@
 PROGRAM
 begin
-    int a
+    int a = 0 ;
 end

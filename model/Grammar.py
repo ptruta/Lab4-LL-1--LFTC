@@ -5,7 +5,7 @@ class Grammar:
 
     def __init__(self):
         self.N = []
-        self.E = list()
+        self.E = []
         self.P = []
         self.S = ""
         self.read_from_file()
@@ -51,22 +51,20 @@ class Grammar:
 
         except IOError as e:
             print(e)
-        print("am ajuns")
 
     def get_productions_for_non_terminal(self, non_terminal):
         if not self.is_non_terminal(non_terminal):
             raise Exception('Can only show productions for non-terminals')
 
-        list = [prod for prod in self.P if prod.getStart() == non_terminal]
-        return list
+        ls = [prod for prod in self.P if prod.getStart() == non_terminal]
+        return ls
 
     def get_productions_containing_non_terminal(self, non_terminal):
         if not self.is_non_terminal(non_terminal):
             raise Exception('Can only show productions for non-terminals')
 
-        return [prod for prod in self.P
-                for rule in prod.getRules()
-                if non_terminal in rule]
+        ls = [prod for prod in self.P for rule in prod.getRules() if non_terminal in rule]
+        return ls
 
     def get_productions(self):
         return self.P

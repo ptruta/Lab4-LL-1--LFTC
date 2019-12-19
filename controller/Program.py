@@ -50,10 +50,11 @@ class Program:
             if productionIndexString == "ε":
                 continue
             productionIndex = int(productionIndexString)
-            for (key, value) in self.parser.getProductionNumbered():
-                if productionIndex == value:
-                    sb += str(value) + ": " + str(key.getKey()) + " -> " + \
-                        str(key.getValue()) + "\n"
+            for key in self.parser.getProductionNumbered().keys():
+                for value in self.parser.getProductionNumbered().values():
+                    if productionIndex == value:
+                        sb += str(value) + ": " + str(key.getKey1()) + " -> " + \
+                              str(key.getValue()) + "\n"
 
         return str(sb)
 
