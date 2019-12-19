@@ -17,3 +17,6 @@ class Pair:
 
     def __str__(self):
         return str(self.__key) + "=" + str(self.__value)
+
+    def __repr__(self):
+        return str(self.__key) + "=" + str(self.__value)

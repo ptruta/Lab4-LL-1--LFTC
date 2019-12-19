@@ -1,4 +1,4 @@
-from typing import List, Any, Union
+from typing import List, Any, Union, Dict
 
 separators: List[Union[str, Any]] = ['[', ']', '{', '}', '(', ')', ':', ';', ' ', ',', '.']
 operators = ['+', '-', '*', '/', '<', '>', '<=', '=', '>=', '==', '&&', '||', '%', '!', '!=', '^', '\n']
@@ -6,7 +6,7 @@ reservedWords = ['int', 'char', 'bool', 'array', 'float', 'struct', 'if', 'else'
                  'read', 'write', 'string']
 
 everything = reservedWords + separators + operators
-codification = dict([[everything[i], i + 2] for i in range(len(everything))])
+codification: Dict[str, int] = dict([[everything[i], i + 2] for i in range(len(everything))])
 codification['identifier'] = 0
 codification['constant'] = 1
 

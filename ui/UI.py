@@ -134,5 +134,5 @@ class UI:
 
     @staticmethod
     def promptForNonTerminal():
-        input1 = input("Give the nonTerminal:")
+        input1 = input("Give the sequence:")
         return input1.strip()

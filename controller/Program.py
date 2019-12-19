@@ -63,10 +63,11 @@ class Program:
 
         if len(errors) == 0:
             pif = self.scanner.getPif()
-            print(str(pif) + "\n")
+            print(str(pif)+ "\n")
+            self.scanner.displayPifReadable()
 
             w = []
-            for (key,value) in pif:
+            for key in pif:
                 w.append(key)
 
             print(w)
@@ -78,8 +79,6 @@ class Program:
                 print(error)
 
         return None
-
-
 
     def parserPIF(self):
         pif = self.scanSourceCode()

@@ -225,7 +225,7 @@ class Parser:
     def parseSource(self, pif):
         sequence = []
         for pifEntry in pif:
-            sequence.append(str(pifEntry[0]))
+            sequence.append(str(pifEntry.getKey()))
         return self.parse(sequence)
 
     def getGrammar(self):

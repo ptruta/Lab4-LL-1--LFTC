@@ -2,6 +2,7 @@ import re
 
 from model.HashTable.SymbolTable import SymbolTable
 from model.MyLanguageSpecification import *
+from model.Pair import Pair
 
 
 class Scanner:
@@ -125,20 +126,20 @@ class Scanner:
     def displayPifReadable(self):
         pifReadable = []
         for pair in self.__pif:
-            codificationTableCode = int(pair[0])
-            symbolTablePosition = int(pair[1])
+            codificationTableCode = int(pair.getKey())
+            symbolTablePosition = int(pair.getValue())
             codificationTableToken = Scanner.findKeyInCodificationTable(codificationTableCode)
             if symbolTablePosition == -1:
-                pifReadable.append((codificationTableToken + " " + str(codificationTableCode), "from Codification"))
+                pifReadable.append(Pair(codificationTableToken + " " + str(codificationTableCode), "from Codification"))
 
             elif symbolTablePosition == 0:
                 symbolTableEntry = self.__identifierTable.getValue(symbolTablePosition)
                 pifReadable.append(
-                    (codificationTableToken + " " + str(codificationTableCode), " " + str(symbolTableEntry)))
+                    Pair(codificationTableToken + " " + str(codificationTableCode), " " + str(symbolTableEntry)))
             elif symbolTablePosition == 1:
                 symbolTableEntry = self.__constantTable.get(symbolTablePosition)
                 pifReadable.append(
-                    (codificationTableToken + " " + str(codificationTableCode), " " + str(symbolTableEntry)))
+                    Pair(codificationTableToken + " " + str(codificationTableCode), " " + str(symbolTableEntry)))
 
         print("Program Internal Form readable: " + str(pifReadable))
 
@@ -148,9 +149,10 @@ class Scanner:
 
     @staticmethod
     def findKeyInCodificationTable(value):
-        for pair in codification.items():
-            if pair[1] == value:
-                return pair[0]
+        for key in codification.keys():
+            for value1 in codification.values():
+                if value1 == value:
+                    return key
 
     def run(self):
 
@@ -162,12 +164,12 @@ class Scanner:
                     line = Scanner.removeExtraSpaces(line)
                     for token in self.tokenGenerator(line):
                         if token in everything:
-                            self.__pif.append((codification[token], -1))
+                            self.__pif.append(Pair(codification[token], -1))
                         elif Scanner.isIdentifier(token):
                             self.__pif.append(
-                                (codification["identifier"], self.__identifierTable.add(token)[0]))
+                                Pair(codification["identifier"], self.__identifierTable.add(token)[0]))
                         elif Scanner.isConstant(token):
-                            self.__pif.append((codification['constant'], self.__constantTable.add(token)[0]))
+                            self.__pif.append(Pair(codification['constant'], self.__constantTable.add(token)[0]))
                         else:
                             errors.append("Unknown token: " + token + " at line :" + str(lineNr))
 

@@ -1,4 +1,3 @@
-PROGRAM
 begin
-    int a = 0 ;
+int a;
 end
