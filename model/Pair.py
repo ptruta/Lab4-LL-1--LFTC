@@ -3,7 +3,7 @@ class Pair:
         self.__key = key
         self.__value = value
 
-    def getKey1(self):
+    def getKey(self):
         return self.__key
 
     def setKey(self, key):

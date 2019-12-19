@@ -1,5 +1,3 @@
-from controller.Program import Program
-
 
 class UI:
     def __init__(self, program):
