@@ -4,6 +4,7 @@ from model.Grammar import Grammar
 from model.Pair import Pair
 from model.ParseTable import ParseTable
 
+
 class Parser:
     rules = stack()
 
@@ -121,46 +122,7 @@ class Parser:
         # production
         # with index
 
-
-
-        # for key in self.__productionsNumbered.keys():
-        #     for value in self.__productionsNumbered.values():
-        #         rowSymbol = key.getKey()
-        #         rule = key.getValue()
-        #         parseTableValue = Pair(rule, value)
-        #
-        #         for columnSymbol in columnSymbols:
-        #             parseTableKey = Pair(rowSymbol, columnSymbol)
-        #
-        #             if rule[0] == columnSymbol and columnSymbol != "ε":
-        #                 self.__parseTable.put(parseTableKey, parseTableValue)
-        #
-        #             elif rule[0] in self.__grammar.get_non_terminals() and columnSymbol in self.__firstSet.get(rule[0]):
-        #                 if not self.__parseTable.containsKey(parseTableKey):
-        #                     self.__parseTable.put(parseTableKey, parseTableValue)
-        #
-        #             else:
-        #                 if rule[0] == "ε":
-        #                     for b in self.__followSet.get(rowSymbol):
-        #                         self.__parseTable.put(Pair(rowSymbol, b), parseTableValue)
-        #
-        #                 else:
-        #                     firsts = set()
-        #                     for symbol in rule:
-        #                         if symbol in self.__grammar.get_non_terminals():
-        #                             firsts.update(self.__firstSet.get(symbol))
-        #                     if "ε" in firsts:
-        #                         for b in self.__firstSet.get(rowSymbol):
-        #                             if b == "ε":
-        #                                 b = "$"
-        #                             parseTableKey = Pair(rowSymbol, b)
-        #                             if not self.__parseTable.containsKey(parseTableKey):
-        #                                 self.__parseTable.put(parseTableKey, parseTableValue)
-
-
         for key in self.__productionsNumbered:
-            rowSymbol = key.getKey()
-            rule = key.getValue()
             value = self.__productionsNumbered[key]
             rowSymbol = key.getKey()
             rule = key.getValue()
@@ -194,10 +156,6 @@ class Parser:
                                 if not self.__parseTable.containsKey(parseTableKey):
                                     self.__parseTable.put(parseTableKey, parseTableValue)
 
-
-
-
-
     def parse(self, w):
         self.initializeStacks(w)
 
@@ -205,8 +163,8 @@ class Parser:
         result = True
 
         while go:
-            betaHead = self.__beta[len(self.__beta)]
-            alphaHead = self.__alpha[len(self.__alpha)]
+            betaHead = self.__beta[-1]
+            alphaHead = self.__alpha[-1]
 
             if betaHead == "$" and alphaHead == "$":
                 return result
@@ -221,23 +179,23 @@ class Parser:
                     self.__beta.pop()
                     continue
 
-                if parseTableInput is None:
-                    go = False
-                    result = False
-                else:
-                    production = parseTableInput.getKey()
-                    productionPos = parseTableInput.getValue()
+            if parseTableInput is None:
+                go = False
+                result = False
+            else:
+                production = parseTableInput.getKey()
+                productionPos = parseTableInput.getValue()
 
-                    if productionPos == -1 and production[0] == "acc":
-                        go = False
-                    elif productionPos == -1 and production[0] == "pop":
-                        self.__beta.pop()
-                        self.__alpha.pop()
-                    else:
-                        self.__beta.pop()
-                        if production != "ε":
-                            self.appendAsChars(production, self.__beta)
-                        self.__pi.append(str(productionPos))
+                if productionPos == -1 and production[0] == "acc":
+                    go = False
+                elif productionPos == -1 and production[0] == "pop":
+                    self.__beta.pop()
+                    self.__alpha.pop()
+                else:
+                    self.__beta.pop()
+                    if production != "ε":
+                        self.appendAsChars(production, self.__beta)
+                    self.__pi.append(str(productionPos))
         return result
 
     def numberingProductions(self):
@@ -246,7 +204,6 @@ class Parser:
             for rule in production.getRules():
                 self.__productionsNumbered[Pair(production.getStart(), rule)] = index
                 index += 1
-
 
     def initializeStacks(self, w):
         self.__alpha.clear()
@@ -262,8 +219,8 @@ class Parser:
 
     @staticmethod
     def appendAsChars(sequence, stack1):
-        for i in range(len(sequence) - 1, 0, -1):
-            stack1.append(sequence[i])
+        for i in reversed(sequence):
+            stack1.append(str(i))
 
     def parseSource(self, pif):
         sequence = []

@@ -6,11 +6,11 @@ class ParseTable:
         self.__table[key] = value
 
     def get(self, key):
-        for entry in self.__table.values():
-            if entry.getValue() is not None:
-                currentKey = entry.getKey()
-                currentValue = entry.getValue()
-                if currentKey[0] == key.getKey() and currentKey[1] == key.getValue():
+        for entry in self.__table:
+            if self.__table[entry] is not None:
+                currentKey = entry
+                currentValue = self.__table[entry]
+                if currentKey.getKey() == key.getKey() and currentKey.getValue() == key.getValue():
                     return currentValue
         return None
 
