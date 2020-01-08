@@ -10,7 +10,7 @@ class ParseTable:
             if self.__table[entry] is not None:
                 currentKey = entry
                 currentValue = self.__table[entry]
-                if currentKey.getKey() == key.getKey() and currentKey.getValue() == key.getValue():
+                if str(currentKey.getKey()) == str(key.getKey()) and str(currentKey.getValue()) == str(key.getValue()):
                     return currentValue
         return None
 

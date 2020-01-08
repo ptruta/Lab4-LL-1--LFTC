@@ -10,7 +10,7 @@ class Production:
     def getRules(self):
         return self.rules
 
-    def toString(self):
+    def __str__(self):
         stri = ""
         stri += self.start + "->"
         for rule in self.rules:

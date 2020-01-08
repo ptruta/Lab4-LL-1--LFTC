@@ -3,7 +3,9 @@ class HashTable:
         self.__content = []
 
     def __search(self, key):
-        return self.__content.index(key) if key in self.__content else None
+        for entry in self.__content:
+            if entry[0] == key:
+                return entry
 
     def __str__(self):
         return str(self.__content)
@@ -14,16 +16,15 @@ class HashTable:
         inddex = self.__search(key)
 
         if inddex is not None:
-            listCol = self.__content[inddex]
+            listCol = inddex[1]
             if value not in listCol:
                 listCol.append(value)
-            return inddex, listCol.index(value)
+            return key, listCol.index(value)
 
         else:
             self.__content.append((key, [value]))
             col_index = 0
-            index = len(self.__content) - 1
-            return index, col_index
+            return key, col_index
 
     def hashCode(self, value):
         return hash(value)

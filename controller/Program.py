@@ -47,7 +47,7 @@ class Program:
         sb = ""
 
         for productionIndexString in pi:
-            if productionIndexString == "ε":
+            if productionIndexString == "epsilon":
                 continue
             productionIndex = int(productionIndexString)
             for key in self.parser.getProductionNumbered().keys():
@@ -63,12 +63,12 @@ class Program:
 
         if len(errors) == 0:
             pif = self.scanner.getPif()
-            print(str(pif)+ "\n")
-            self.scanner.displayPifReadable()
+            print(str(pif) + "\n")
+        #self.scanner.displayPifReadable()
 
             w = []
-            for key in pif:
-                w.append(key)
+            for elem in pif:
+                w.append(elem.getKey())
 
             print(w)
             self.parse(w)

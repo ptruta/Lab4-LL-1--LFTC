@@ -3,6 +3,7 @@ from inspect import stack
 from model.Grammar import Grammar
 from model.Pair import Pair
 from model.ParseTable import ParseTable
+from model.Specification import codification
 
 
 class Parser:
@@ -28,6 +29,8 @@ class Parser:
     def generateFirstSet(self):
         for nonTerminal in self.__grammar.get_non_terminals():
             self.__firstSet[nonTerminal] = self.firstOf(nonTerminal)
+        for terminal in self.__grammar.get_terminals():
+            self.__firstSet[terminal] = {terminal}
 
     def firstOf(self, nonTerminal):
         if nonTerminal in self.__firstSet.keys():
@@ -37,15 +40,15 @@ class Parser:
         for production in self.__grammar.get_productions_for_non_terminal(nonTerminal):
             for rule in production.getRules():
                 firstSymbol = rule[0]
-                if firstSymbol == "ε":
-                    temp.add("ε")
+                if firstSymbol == "epsilon":
+                    temp.add("epsilon")
                 elif firstSymbol in terminals:
                     temp.add(firstSymbol)
                 else:
                     if firstSymbol == nonTerminal:
                         return temp
                     else:
-                        temp.union(self.firstOf(firstSymbol))
+                        temp = temp.union(self.firstOf(firstSymbol))
         return temp
 
     def followOf(self, nonTerminal, initialNonTerminal):
@@ -88,9 +91,9 @@ class Parser:
             else:
                 if initialNonTerminal != nextSymbol:
                     firsts = set(self.__firstSet[nextSymbol])
-                    if "ε" in firsts:
+                    if "epsilon" in firsts:
                         temp.union(self.followOf(nextSymbol, initialNonTerminal))
-                        firsts.remove("ε")
+                        firsts.remove("epsilon")
                     temp.union(firsts)
         return temp
 
@@ -109,13 +112,13 @@ class Parser:
         # if:
         #
         # a) a ∈ first(α)
-        # b) a != ε
+        # b) a != epsilon
         # c) A -> α
         # production
         # with index i
         #
         # 2) M(A, b) = (α, i), if:
-        # a) ε ∈ first(α)
+        # a) epsilon ∈ first(α)
         # b) whichever
         # b ∈ follow(A)
         # c) A -> α
@@ -123,15 +126,15 @@ class Parser:
         # with index
 
         for key in self.__productionsNumbered:
-            value = self.__productionsNumbered[key]
+            prodNumber = self.__productionsNumbered[key]
             rowSymbol = key.getKey()
             rule = key.getValue()
-            parseTableValue = Pair(rule, value)
+            parseTableValue = Pair(rule, prodNumber)
 
             for columnSymbol in columnSymbols:
                 parseTableKey = Pair(rowSymbol, columnSymbol)
 
-                if rule[0] == columnSymbol and columnSymbol != "ε":
+                if rule[0] == columnSymbol and columnSymbol != "epsilon":
                     self.__parseTable.put(parseTableKey, parseTableValue)
 
                 elif rule[0] in self.__grammar.get_non_terminals() and columnSymbol in self.__firstSet.get(rule[0]):
@@ -139,7 +142,7 @@ class Parser:
                         self.__parseTable.put(parseTableKey, parseTableValue)
 
                 else:
-                    if rule[0] == "ε":
+                    if rule[0] == "epsilon":
                         for b in self.__followSet.get(rowSymbol):
                             self.__parseTable.put(Pair(rowSymbol, b), parseTableValue)
 
@@ -147,10 +150,10 @@ class Parser:
                         firsts = set()
                         for symbol in rule:
                             if symbol in self.__grammar.get_non_terminals():
-                                firsts.update(self.__firstSet.get(symbol))
-                        if "ε" in firsts:
+                                firsts =firsts.union(self.__firstSet.get(symbol))
+                        if "epsilon" in firsts:
                             for b in self.__firstSet.get(rowSymbol):
-                                if b == "ε":
+                                if b == "epsilon":
                                     b = "$"
                                 parseTableKey = Pair(rowSymbol, b)
                                 if not self.__parseTable.containsKey(parseTableKey):
@@ -165,15 +168,15 @@ class Parser:
         while go:
             betaHead = self.__beta[-1]
             alphaHead = self.__alpha[-1]
-
+            #Daca ii gata :
             if betaHead == "$" and alphaHead == "$":
                 return result
 
             heads = Pair(betaHead, alphaHead)
             parseTableInput = self.__parseTable.get(heads)
-
             if parseTableInput is None:
-                heads = Pair(betaHead, "ε")
+
+                heads = Pair(betaHead, codification["epsilon"])
                 parseTableInput = self.__parseTable.get(heads)
                 if parseTableInput is not None:
                     self.__beta.pop()
@@ -188,12 +191,12 @@ class Parser:
 
                 if productionPos == -1 and production[0] == "acc":
                     go = False
-                elif productionPos == -1 and production[0] == "pop":
+                elif productionPos == -1 and production == "pop":
                     self.__beta.pop()
                     self.__alpha.pop()
                 else:
                     self.__beta.pop()
-                    if production != "ε":
+                    if production != "epsilon":
                         self.appendAsChars(production, self.__beta)
                     self.__pi.append(str(productionPos))
         return result
@@ -215,7 +218,7 @@ class Parser:
         self.__beta.append(self.__grammar.get_starting_symbol())
 
         self.__pi.clear()
-        self.__pi.append("ε")
+        self.__pi.append("epsilon")
 
     @staticmethod
     def appendAsChars(sequence, stack1):

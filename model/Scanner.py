@@ -1,7 +1,7 @@
 import re
 
 from model.HashTable.SymbolTable import SymbolTable
-from model.MyLanguageSpecification import *
+from model.Specification import *
 from model.Pair import Pair
 
 
@@ -40,6 +40,7 @@ class Scanner:
     def isIdentifier(token):
         return re.match(r'^[a-zA-Z]([a-zA-Z]|[0-9]){0,8}$', token) is not None or \
                re.match(r'^[a-zA-Z][a-zA-Z]{0,8}[0-9]{0,8}$', token) is not None
+
     @staticmethod
     def isConstant(token):
         return re.match('^(0|[+\- ]*[1-9][0-9]*)$|^\'[a-zA-Z0-9]\'$|^\".+\"$', token) is not None
@@ -67,6 +68,12 @@ class Scanner:
         index = 0
 
         while index < len(line):
+            if line[index] == " ":
+                if token:
+                    yield token
+                    token = ""
+                index += 1
+                continue
             if line[index] == '"':
                 if token:
                     yield token
@@ -107,6 +114,10 @@ class Scanner:
                 yield token
                 token = ''
 
+            elif token in reservedWords:
+                yield token
+
+
             else:
                 token += line[index]
                 index += 1
@@ -136,7 +147,7 @@ class Scanner:
                 symbolTableEntry = self.__identifierTable.getValue(symbolTablePosition)
                 pifReadable.append(
                     Pair(codificationTableToken + " " + str(codificationTableCode), " " + str(symbolTableEntry)))
-            elif symbolTablePosition == 1:
+            else:
                 symbolTableEntry = self.__constantTable.get(symbolTablePosition)
                 pifReadable.append(
                     Pair(codificationTableToken + " " + str(codificationTableCode), " " + str(symbolTableEntry)))
@@ -150,9 +161,8 @@ class Scanner:
     @staticmethod
     def findKeyInCodificationTable(value):
         for key in codification.keys():
-            for value1 in codification.values():
-                if value1 == value:
-                    return key
+            if value == codification[key]:
+                return key
 
     def run(self):
 
