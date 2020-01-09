@@ -5,7 +5,7 @@ from model.Scanner import Scanner
 class Program:
     def __init__(self):
         self.parser = Parser()
-        self.scanner = Scanner("./model/file.txt")
+        self.scanner = Scanner("./model/file1")
 
     def getFirstSet(self):
         return self.parser.getFirstSet()
@@ -64,7 +64,7 @@ class Program:
         if len(errors) == 0:
             pif = self.scanner.getPif()
             print(str(pif) + "\n")
-        #self.scanner.displayPifReadable()
+        # self.scanner.displayPifReadable()
 
             w = []
             for elem in pif:

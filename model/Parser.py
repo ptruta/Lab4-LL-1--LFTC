@@ -3,7 +3,7 @@ from inspect import stack
 from model.Grammar import Grammar
 from model.Pair import Pair
 from model.ParseTable import ParseTable
-from model.Specification import codification
+from model.MyLanguageSpecification import codification
 
 
 class Parser:
@@ -150,7 +150,7 @@ class Parser:
                         firsts = set()
                         for symbol in rule:
                             if symbol in self.__grammar.get_non_terminals():
-                                firsts =firsts.union(self.__firstSet.get(symbol))
+                                firsts = firsts.union(self.__firstSet.get(symbol))
                         if "epsilon" in firsts:
                             for b in self.__firstSet.get(rowSymbol):
                                 if b == "epsilon":
@@ -168,7 +168,7 @@ class Parser:
         while go:
             betaHead = self.__beta[-1]
             alphaHead = self.__alpha[-1]
-            #Daca ii gata :
+            # Daca ii gata :
             if betaHead == "$" and alphaHead == "$":
                 return result
 
