@@ -23,7 +23,7 @@ class Grammar:
     def read_from_file(self):
         try:
             i = 0
-            with open('./data/grammar1') as f:
+            with open('./data/sample') as f:
                 for line in f.readlines():
                     if i <= 2:
                         line = line.replace("\n", "")

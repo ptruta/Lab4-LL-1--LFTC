@@ -3,7 +3,7 @@ from inspect import stack
 from model.Grammar import Grammar
 from model.Pair import Pair
 from model.ParseTable import ParseTable
-from model.MyLanguageSpecification import codification
+from model.Specification import codification
 
 
 class Parser:

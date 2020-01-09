@@ -168,6 +168,7 @@ class Scanner:
 
         errors = []
         lineNr = 1
+        self.__pif = []
         try:
             with open(self.__fileName, "r") as file:
                 for line in file.readlines():
