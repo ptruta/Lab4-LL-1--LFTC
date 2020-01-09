@@ -3,7 +3,7 @@ from inspect import stack
 from model.Grammar import Grammar
 from model.Pair import Pair
 from model.ParseTable import ParseTable
-from model.Specification import codification
+from model.MyLanguageSpecification import codification
 
 
 class Parser:
@@ -12,7 +12,7 @@ class Parser:
     def __init__(self):
         self.__grammar = Grammar()
         self.__firstSet = dict()
-        self.__followSet = {}
+        self.__followSet = dict()
         self.__parseTable = ParseTable()
         self.__productionsNumbered = {}
         self.__alpha = stack()
@@ -24,17 +24,16 @@ class Parser:
 
     def generateFollowSets(self):
         for nonTerminal in self.__grammar.get_non_terminals():
-            self.__followSet[nonTerminal] = self.followOf(nonTerminal, nonTerminal)
+            self.__followSet[nonTerminal] = self.followOf(nonTerminal, nonTerminal)#
 
     def generateFirstSet(self):
         for nonTerminal in self.__grammar.get_non_terminals():
             self.__firstSet[nonTerminal] = self.firstOf(nonTerminal)
-        for terminal in self.__grammar.get_terminals():
-            self.__firstSet[terminal] = {terminal}
+
 
     def firstOf(self, nonTerminal):
         if nonTerminal in self.__firstSet.keys():
-            return self.__firstSet[nonTerminal]
+            return self.__firstSet.get(nonTerminal)
         terminals = self.__grammar.get_terminals()
         temp = set()
         for production in self.__grammar.get_productions_for_non_terminal(nonTerminal):

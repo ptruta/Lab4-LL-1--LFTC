@@ -23,7 +23,7 @@ class Grammar:
     def read_from_file(self):
         try:
             i = 0
-            with open('./data/sample') as f:
+            with open('./data/grammar') as f:
                 for line in f.readlines():
                     if i <= 2:
                         line = line.replace("\n", "")
@@ -48,9 +48,9 @@ class Grammar:
                         self.P.append(Production(tokens[0], rules))
 
                     i = i + 1
-
         except IOError as e:
             print(e)
+
 
     def get_productions_for_non_terminal(self, non_terminal):
         if not self.is_non_terminal(non_terminal):

@@ -1,3 +1,5 @@
+from model.Scanner import Scanner, separators, reservedWords
+
 
 class UI:
     def __init__(self, program):
@@ -54,7 +56,7 @@ class UI:
             self.fileMenuGrammar()
             return
         elif option == 4:
-            print(str(self.program.getProductionsForNonterminal(self.promptForSequence()))+"\n")
+            print(str(self.program.getProductionsForNonterminal(self.promptForNonTerminal()))+"\n")
             print("\n")
             self.fileMenuGrammar()
             return
@@ -82,15 +84,15 @@ class UI:
             self.start()
             return
         elif option == 1:
-            for key in self.program.getFirstSet().keys():
-                for value in self.program.getFirstSet().values():
-                    print(self.displaySet(key,value))
+            for elem in self.program.getFirstSet():
+                if self.program.getFirstSet()[elem] != set():
+                    print(self.displaySet(elem, self.program.getFirstSet()[elem]))
             self.fileMenuParser()
             return
         elif option == 2:
-            for key in self.program.getFollowSet().keys():
-                for value in self.program.getFollowSet().values():
-                    print(self.displaySet(key,value))
+            for elem in self.program.getFollowSet():
+                if self.program.getFollowSet()[elem] != set():
+                    print(self.displaySet(elem, self.program.getFollowSet()[elem]))
             self.fileMenuParser()
             return
         elif option == 3:
@@ -99,7 +101,7 @@ class UI:
             self.fileMenuParser()
             return
         elif option == 4:
-            self.program.parse(self.promptForNonTerminal())
+            self.program.parse(self.promptForSequence())
             print("\n")
             self.fileMenuParser()
             return
@@ -126,11 +128,15 @@ class UI:
         sb1 = sb[:-2]
         print(sb+"\n")
 
+
     @staticmethod
     def promptForSequence():
         input1 = input("Give the sequence:")
         input1 = input1.replace("\n", "")
-        return input1.split(" ")
+        result =[]
+        for token in Scanner.tokenGenerator(input1):
+            result.append(token)
+        return result
 
     @staticmethod
     def promptForNonTerminal():

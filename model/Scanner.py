@@ -1,7 +1,7 @@
 import re
 
 from model.HashTable.SymbolTable import SymbolTable
-from model.Specification import *
+from model.MyLanguageSpecification import *
 from model.Pair import Pair
 
 
@@ -12,6 +12,7 @@ class Scanner:
         self.__constantTable = SymbolTable()
         self.__identifierTable = SymbolTable()
         self.__fileName = fileName
+
 
     @staticmethod
     def getOperatorToken(line, index):

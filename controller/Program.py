@@ -5,7 +5,7 @@ from model.Scanner import Scanner
 class Program:
     def __init__(self):
         self.parser = Parser()
-        self.scanner = Scanner("./model/file.txt")
+        self.scanner = Scanner("./model/file1")
 
     def getFirstSet(self):
         return self.parser.getFirstSet()
