@@ -51,10 +51,10 @@ class Program:
                 continue
             productionIndex = int(productionIndexString)
             for key in self.parser.getProductionNumbered().keys():
-                for value in self.parser.getProductionNumbered().values():
-                    if productionIndex == value:
-                        sb += str(value) + ": " + str(key.getKey()) + " -> " + \
-                              str(key.getValue()) + "\n"
+                value = self.parser.getProductionNumbered()[key]
+                if productionIndex == value:
+                    sb += str(value) + ": " + str(key.getKey()) + " -> " + \
+                          str(key.getValue()) + "\n"
 
         return str(sb)
 
